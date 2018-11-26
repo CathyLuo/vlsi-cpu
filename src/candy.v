@@ -1,4 +1,4 @@
-`include "define.v"
+`include "defines.v"
 
 module candy (input wire clk,
 			input wire rst
@@ -26,7 +26,7 @@ regfile regfile1(
 	.wdata(wdata),
 	.re1(reg1_read_enable),
 	.raddr1(reg1_addr),
-	.rdata1(reg1_data).
+	.rdata1(reg1_data),
 	.re2(reg2_read_enable),
 	.raddr2(reg2_addr),
 	.rdata2(reg2_data)

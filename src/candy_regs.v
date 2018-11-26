@@ -18,17 +18,17 @@ module candy_regs(input wire clk,
 
     reg [`RegBus] regs [0:`RegNum-1];
 
-    always @(posedge clk)
+    always @(posedge clk) begin
         if(rst == `RstDisable) begin
             //write
-            if((we == `WriteEnale) && (waddr != `RegWidth'b0)) begin
+            if((we == `WriteEnable) && (waddr != `RegWidth'b0)) begin
                 regs[waddr] <= waddr;
             end
             //read 1
             if(raddr1 == `RegWidth'b0) begin
                 rdata1 <= `ZeroWord;
             end
-            else if ((raddr1 == waddr) && (we == `WriteEnale) && (re1)) begin
+            else if ((raddr1 == waddr) && (we == `WriteEnable) && (re1)) begin
                 rdata1 <= wdata;
             end
             else if (re1 == `ReadEnable) begin
@@ -42,7 +42,7 @@ module candy_regs(input wire clk,
             if(raddr2 == `RegWidth'b0) begin
                 rdata2 <= `ZeroWord;
             end
-            else if ((raddr2 == waddr) && (we == `WriteEnale) && (re2)) begin
+            else if ((raddr2 == waddr) && (we == `WriteEnable) && (re2)) begin
                 rdata2 <= wdata;
             end
             else if (re2 == `ReadEnable) begin
@@ -51,11 +51,12 @@ module candy_regs(input wire clk,
             else begin
                 rdata2 <= `ZeroWord;
             end
-        end
+        
 
-        if(rst == `RstEnable) begin
-            rdata1 <= `ZeroWord;
-            rdata2 <= `ZeroWord;
+            if(rst == `RstEnable) begin
+                rdata1 <= `ZeroWord;
+                rdata2 <= `ZeroWord;
+            end
         end
     end
 
