@@ -1,30 +1,37 @@
-module candy (input clk,
-			input reset,
-			);
+`include "define.v"
+
+module candy (input wire clk,
+			input wire rst
+
+);
+
+wire reg1_read_enable;
+wire reg2_read_enable;
+
+wire [`RegBus] reg1_data;
+wire [`RegBus] reg2_data;
+wire [`RegAddrBus] reg1_addr;
+wire [`RegAddrBus] reg2_addr;
+
+wire write_enable;
+wire waddr;
+wire wdata;
+
+
+regfile regfile1(
+	.clk(clk),
+	.rst(rst),
+	.we(write_enable),
+	.waddr(waddr),
+	.wdata(wdata),
+	.re1(reg1_read_enable),
+	.raddr1(reg1_addr),
+	.rdata1(reg1_data).
+	.re2(reg2_read_enable),
+	.raddr2(reg2_addr),
+	.rdata2(reg2_data)
+);
+
 endmodule
 
-module candy_regs(input clk,
-                input write_enable,
-                input [3:0] waddr,
-                input [3:0] raddr1,
-                input [3:0] raddr2,
-                input [23:0] wdata,
-                output [23:0] rdata1,
-                output [23:0] rdata2
-                );
 
-    reg [23:0] regs [0:15];
-
-    always @(posedge clk)
-        if (write_enable) begin
-			regs[waddr] <= wdata;
-        end
-
-	assign rdata1 = regs[raddr1];
-	assign rdata2 = regs[raddr2];
-
-endmodule
-
-//module candy_mem()
-
-//endmodule
