@@ -18,7 +18,7 @@ wire waddr;
 wire wdata;
 
 
-regfile regfile1(
+candy_regs regfile(
 	.clk(clk),
 	.rst(rst),
 	.we(write_enable),
