@@ -1,9 +1,13 @@
+`timescale 1ns/1ps
+
+`include "candy_regs.v"
 `include "defines.v"
 
-module candy (input wire clk,
-			input wire rst
 
-);
+module candy_regs_tb;
+
+wire clk;
+wire rst;
 
 wire reg1_read_enable;
 wire reg2_read_enable;
@@ -14,8 +18,8 @@ wire [`RegAddrBus] reg1_addr;
 wire [`RegAddrBus] reg2_addr;
 
 wire write_enable;
-wire [`RegAddrBus]waddr;
-wire [`RegBus]wdata;
+wire waddr;
+wire wdata;
 
 
 candy_regs regfile(
@@ -32,6 +36,18 @@ candy_regs regfile(
 	.rdata2(reg2_data)
 );
 
+initial begin
+    #0 begin
+    clk <= 1'b0;
+    rst <= `RstDisable;
+    end
+
+    #600 $finish;
+end
+
+
+always #10 begin
+    clk <= ~clk;
+end
+
 endmodule
-
-

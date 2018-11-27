@@ -9,11 +9,11 @@ module candy_regs(input wire clk,
 
                 input wire re1,
                 input wire [`RegAddrBus] raddr1,
-                output reg [`RegAddrBus] rdata1,
+                output reg [`RegBus] rdata1,
 
                 input wire re2,
                 input wire [`RegAddrBus] raddr2,
-                output reg [`RegAddrBus] rdata2
+                output reg [`RegBus] rdata2
 );
 
     reg [`RegBus] regs [0:`RegNum-1];
@@ -22,8 +22,9 @@ module candy_regs(input wire clk,
         if(rst == `RstDisable) begin
             //write
             if((we == `WriteEnable) && (waddr != `RegWidth'b0)) begin
-                regs[waddr] <= waddr;
+                regs[waddr] <= wdata;
             end
+
             //read 1
             if(raddr1 == `RegWidth'b0) begin
                 rdata1 <= `ZeroWord;
@@ -50,12 +51,13 @@ module candy_regs(input wire clk,
             end            
             else begin
                 rdata2 <= `ZeroWord;
-            end
+            end     
         
 
             if(rst == `RstEnable) begin
                 rdata1 <= `ZeroWord;
                 rdata2 <= `ZeroWord;
+                
             end
         end
     end
