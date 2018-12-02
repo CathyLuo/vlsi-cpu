@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns/1ns
 
 `include "candy_regs.v"
 `include "defines.v"
@@ -6,21 +6,20 @@
 
 module candy_regs_tb;
 
-wire clk;
-wire rst;
+reg clk;
+reg rst;
 
-wire reg1_read_enable;
-wire reg2_read_enable;
+reg reg1_read_enable;
+reg reg2_read_enable;
 
 wire [`RegBus] reg1_data;
 wire [`RegBus] reg2_data;
-wire [`RegAddrBus] reg1_addr;
-wire [`RegAddrBus] reg2_addr;
+reg [`RegAddrBus] reg1_addr;
+reg [`RegAddrBus] reg2_addr;
 
-wire write_enable;
-wire waddr;
-wire wdata;
-
+reg write_enable;
+reg [`RegAddrBus]waddr;
+reg [`RegBus]wdata;
 
 candy_regs regfile(
 	.clk(clk),
@@ -40,14 +39,46 @@ initial begin
     #0 begin
     clk <= 1'b0;
     rst <= `RstDisable;
-    end
+	reg1_read_enable <= 1'b0;
+	reg2_read_enable <= 1'b0;
+	write_enable <= 1'b0;    
 
-    #600 $finish;
+	wdata <= 24'b0;
+	reg1_addr <= 4'b0;
+	reg2_addr <= 4'b0;
+	end
+
+	#20
+	//test case 1:
+	write_enable <= 1'b1;
+	#10
+	waddr <= 4'h1;
+	wdata <= 24'h124b36;
+	#10
+	waddr <= 4'h2;
+	wdata <= 24'h655356;
+	#10
+	waddr <= 4'h3;
+	wdata <= 24'h5a0024;
+	#10
+	waddr <= 4'h4;
+	wdata <= 24'h5a0034;
+	#20
+	write_enable <= 1'b0;
+
+	#10
+	reg1_read_enable <= 1'b1;
+	reg1_addr <= 4'h3;
+	#10
+	reg2_read_enable <= 1'b1;
+	reg2_addr <= 4'h4;	
+	
+    #60 rst <= `RstEnable;
+    #20 rst <= `RstDisable;
+    
 end
 
 
-always #10 begin
-    clk <= ~clk;
-end
+always #5 clk <= ~clk;
 
 endmodule
