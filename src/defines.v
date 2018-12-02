@@ -14,3 +14,4 @@
 `define RegWidth 24
 `define RegNum 16
 
+`define EXE_ADD 000000
