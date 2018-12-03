@@ -74,7 +74,7 @@ end
 
 always @ (*) begin
     if(rst == `RstEnable) begin
-
+    
     end
     else begin
     end
