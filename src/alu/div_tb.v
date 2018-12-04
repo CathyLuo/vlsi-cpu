@@ -11,7 +11,9 @@ module div_tb;
 	reg start_i;
 	reg annul_i;
 
-    wire[47:0] result_o;
+    //wire[47:0] result_o;
+    wire [23:0]		quotient_o;
+	wire [23:0]		remainder_o;
     wire ready_o;
 
    
@@ -22,7 +24,8 @@ module div_tb;
             .opdata2_i(opdata2_i),
             .start_i(start_i),
             .annul_i(annul_i),
-            .result_o(result_o),
+            .remainder_o(remainder_o),
+            .quotient_o(quotient_o),
             .ready_o(ready_o));
 
     
@@ -33,11 +36,11 @@ module div_tb;
             rst <= 1'b1;
             signed_div_i <= 1'b0;
             opdata1_i <= 24'd703;
-            opdata2_i <= 24'd703;
+            opdata2_i <= 24'd37;
             start_i <= 1'b1;
             annul_i <= 1'b0;
         end
-        #10 begin
+        #20 begin
             rst <= 1'b0;
         end
     end
