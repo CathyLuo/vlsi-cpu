@@ -1,24 +1,25 @@
 `include "defines.v"
 
 module candy_alu(
+    input clk,
     input wire rst,
 
     input wire [`AluOpBus] aluop_i,
     input wire [`RegBus] reg1_i,
     input wire [`RegBus] reg2_i,
-    input wire [`RegAddBus] wd_i,
+    //input wire [`RegAddBus] wd_i,
 
-    input wire [`RegBus] div_result_i,
-    input wire div_ready_i,
+    //input wire [`RegBus] div_result_i,
+    //input wire div_ready_i,
     
-    output reg [`RegBus] wdata_o,
+    output reg [`RegBus] res_o
 
-    output reg [`RegBus] div_opdata1_o;
-    output reg [`RegBus] div_opdata2_o;
-    output reg div_start_o;
-    output reg signed_div_o;
+    //output reg [`RegBus] div_opdata1_o;
+    //output reg [`RegBus] div_opdata2_o;
+    //output reg div_start_o;
+    //output reg signed_div_o;
 
-    output reg stallreq_for_div;
+    //output reg stallreq_for_div;
 );
 
 wire [`RegBus] op1;
@@ -34,6 +35,8 @@ assign mul_op2 = reg2_i;
 
 assign add_op1 = reg1_i;
 assign add_op2 = reg2_i;
+
+reg [23:0] wdata_o;
 
 walltree_mul wm(
     .op1(mul_op1),
@@ -53,6 +56,9 @@ always @ (*) begin
     end
     else begin
         case (aluop_i)
+            `EXE_NEG:   begin
+                wdata_o <= ~(reg1_i);
+            end
             `EXE_AND:   begin
                 wdata_o <= reg1_i & reg2_i;
             end
@@ -115,67 +121,71 @@ always @ (*) begin
     end
 end
 
-always @ (*) begin
-	if(rst == `RstEnable) begin
-	    stallreq_for_div <= `NoStop;
-		div_opdata1_o <= `ZeroWord;
-		div_opdata2_o <= `ZeroWord;
-		div_start_o <= `DivStop;
-		signed_div_o <= 1'b0;
-	end else begin
-		stallreq_for_div <= `NoStop;
-		div_opdata1_o <= `ZeroWord;
-		div_opdata2_o <= `ZeroWord;
-		div_start_o <= `DivStop;
-		signed_div_o <= 1'b0;
-		case (aluop_i) 
-			`EXE_DIV:		begin
-				if(div_ready_i == `DivResultNotReady) begin
-					div_opdata1_o <= reg1_i;
-					div_opdata2_o <= reg2_i;
-					div_start_o <= `DivStart;
-					signed_div_o <= 1'b1;
-					stallreq_for_div <= `Stop;
-				end else if(div_ready_i == `DivResultReady) begin
-					div_opdata1_o <= reg1_i;
-					div_opdata2_o <= reg2_i;
-					div_start_o <= `DivStop;
-					signed_div_o <= 1'b1;
-					stallreq_for_div <= `NoStop;
-				end else begin
-					div_opdata1_o <= `ZeroWord;
-					div_opdata2_o <= `ZeroWord;
-					div_start_o <= `DivStop;
-					signed_div_o <= 1'b0;
-					stallreq_for_div <= `NoStop;
-				end
-			end
-			`EXE_DIVU:		begin
-				if(div_ready_i == `DivResultNotReady) begin
-					div_opdata1_o <= reg1_i;
-					div_opdata2_o <= reg2_i;
-					div_start_o <= `DivStart;
-					signed_div_o <= 1'b0;
-					stallreq_for_div <= `Stop;
-				end else if(div_ready_i == `DivResultReady) begin
-					div_opdata1_o <= reg1_i;
-					div_opdata2_o <= reg2_i;
-					div_start_o <= `DivStop;
-					signed_div_o <= 1'b0;
-					stallreq_for_div <= `NoStop;
-				end else begin
-					div_opdata1_o <= `ZeroWord;
-					div_opdata2_o <= `ZeroWord;
-					div_start_o <= `DivStop;
-					signed_div_o <= 1'b0;
-					stallreq_for_div <= `NoStop;
-				end
-			end
-			default: begin
-			end
-		endcase
-	end
+always @ (posedge clk) begin
+    res_o <= wdata_o;
 end
+
+// always @ (*) begin
+// 	if(rst == `RstEnable) begin
+// 	    stallreq_for_div <= `NoStop;
+// 		div_opdata1_o <= `ZeroWord;
+// 		div_opdata2_o <= `ZeroWord;
+// 		div_start_o <= `DivStop;
+// 		signed_div_o <= 1'b0;
+// 	end else begin
+// 		stallreq_for_div <= `NoStop;
+// 		div_opdata1_o <= `ZeroWord;
+// 		div_opdata2_o <= `ZeroWord;
+// 		div_start_o <= `DivStop;
+// 		signed_div_o <= 1'b0;
+// 		case (aluop_i) 
+// 			`EXE_DIV:		begin
+// 				if(div_ready_i == `DivResultNotReady) begin
+// 					div_opdata1_o <= reg1_i;
+// 					div_opdata2_o <= reg2_i;
+// 					div_start_o <= `DivStart;
+// 					signed_div_o <= 1'b1;
+// 					stallreq_for_div <= `Stop;
+// 				end else if(div_ready_i == `DivResultReady) begin
+// 					div_opdata1_o <= reg1_i;
+// 					div_opdata2_o <= reg2_i;
+// 					div_start_o <= `DivStop;
+// 					signed_div_o <= 1'b1;
+// 					stallreq_for_div <= `NoStop;
+// 				end else begin
+// 					div_opdata1_o <= `ZeroWord;
+// 					div_opdata2_o <= `ZeroWord;
+// 					div_start_o <= `DivStop;
+// 					signed_div_o <= 1'b0;
+// 					stallreq_for_div <= `NoStop;
+// 				end
+// 			end
+// 			`EXE_DIVU:		begin
+// 				if(div_ready_i == `DivResultNotReady) begin
+// 					div_opdata1_o <= reg1_i;
+// 					div_opdata2_o <= reg2_i;
+// 					div_start_o <= `DivStart;
+// 					signed_div_o <= 1'b0;
+// 					stallreq_for_div <= `Stop;
+// 				end else if(div_ready_i == `DivResultReady) begin
+// 					div_opdata1_o <= reg1_i;
+// 					div_opdata2_o <= reg2_i;
+// 					div_start_o <= `DivStop;
+// 					signed_div_o <= 1'b0;
+// 					stallreq_for_div <= `NoStop;
+// 				end else begin
+// 					div_opdata1_o <= `ZeroWord;
+// 					div_opdata2_o <= `ZeroWord;
+// 					div_start_o <= `DivStop;
+// 					signed_div_o <= 1'b0;
+// 					stallreq_for_div <= `NoStop;
+// 				end
+// 			end
+// 			default: begin
+// 			end
+// 		endcase
+// 	end
+// end
 
 
 endmodule // candy_alu

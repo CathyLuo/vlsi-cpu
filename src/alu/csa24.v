@@ -7,12 +7,11 @@ module 	csa24(
 
 wire [31:0] a;
 wire [31:0] b;
-wire cin;
 wire [31:0] sum;
 wire cout;
 
 assign a = {{8{op1[23]}}, op1[23:0]};
-assign b = {{8{op1[23]}}, op1[23:0]};
+assign b = {{8{op2[23]}}, op2[23:0]};
 
 wire	[2 : 0]		p1, g1, c1_s0, c1_s1, c1;
 wire 	[3 : 0]		p2, g2, c2_s0, c2_s1, c2;
@@ -29,8 +28,8 @@ assign 	c1_s0[2] = g1[2] | (p1[2] & c1_s0[1]);
 assign	c1_s1[0] = g1[0] | p1[0];
 assign	c1_s1[1] = g1[1] | (p1[1] & c1_s1[0]);
 assign	c1_s1[2] = g1[2] | (p1[2] & c1_s1[1]);
-assign	c1 = cin ? c1_s1 : c1_s0;
-assign	sum[2 : 0] = a[2:0] ^ b[2:0] ^ {c1[1:0], cin};
+assign	c1 = 1'b0 ? c1_s1 : c1_s0;
+assign	sum[2 : 0] = a[2:0] ^ b[2:0] ^ {c1[1:0], 1'b0};
 
 assign	g2 = a[6 : 3] & b[6 : 3];
 assign	p2 = a[6 : 3] | b[6 : 3];
@@ -76,6 +75,7 @@ assign	c4_s1[3] = g4[3] | (p4[3] & c4_s1[2]);
 assign	c4_s1[4] = g4[4] | (p4[4] & c4_s1[3]);
 assign	c4_s1[5] = g4[5] | (p4[5] & c4_s1[4]);
 assign	c4 = c3[4] ? c4_s1 : c4_s0;
+assign	sum[17 : 12] = a[17 : 12] ^ b[17 : 12] ^ {c4[4:0], c3[4]};
 
 assign	g5 = a[24 : 18] & b[24 : 18];
 assign	p5 = a[24 : 18] | b[24 : 18];
