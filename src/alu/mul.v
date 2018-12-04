@@ -10,6 +10,6 @@ module mul(input wire clk,
         output reg error 
 );
 
-    
+
 
 endmodule // mul

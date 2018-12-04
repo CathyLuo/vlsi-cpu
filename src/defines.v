@@ -8,6 +8,7 @@
 
 `define ZeroWord 24'b0
 
+//candy: intruction format
 `define R_typecode 00
 `define I_typecode 01
 `define S_typecode 10
@@ -22,16 +23,6 @@
 `define U_opcode 1:0
 `define UJ_opcode 1:0
 
-//candy: register file
-`define RegAddrBus 3:0
-`define RegBus 23:0
-`define RegWidth 24
-`define RegNum 16
-
-//candy: ALU
-`define DataBus 23:0 
-
-
 `define EXE_MUL 000010
 `define EXE_DIV 000011
 `define EXE_DIVU 000100
@@ -44,3 +35,27 @@
 `define EXE_SRAI 0101
 `define EXE_SRL 010010
 `define EXE_SRLI 0110
+
+//candy: register file
+`define RegAddrBus 3:0
+`define RegBus 23:0
+`define DoubleRegBus 47:0
+`define RegWidth 24
+`define RegNum 16
+
+//candy: ALU
+
+`define AluOpBus 5:0
+
+
+//candy: error code
+`define Overflow 00
+`define Dividebyzero 01
+
+//div
+`define ResultWidth 47:0
+`define Dividebyzero 01
+`define singed_div 1'b1
+`define unsigned_div 1'b0
+
+
