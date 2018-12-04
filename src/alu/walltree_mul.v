@@ -1,7 +1,7 @@
 module walltree_mul(
-input wire [23:0] op1,
-input wire [23:0] op2,
-output wire [48:0] result
+	input wire [23:0] op1,
+	input wire [23:0] op2,
+	output wire [48:0] result
 );
 
 // signals for the partial products
@@ -29,61 +29,74 @@ wire [23:0] pp20;
 wire [23:0] pp21;
 wire [23:0] pp22;
 wire [23:0] pp23;  // internal signals
-// layer : 1
-// csa : 0
+
 wire [25:0] sigCSA_sum_0;
-wire [25:0] sigCSA_cry_0;  // csa : 1
+wire [25:0] sigCSA_cry_0;
+
 wire [25:0] sigCSA_sum_1;
-wire [25:0] sigCSA_cry_1;  // csa : 2
+wire [25:0] sigCSA_cry_1;  
+
 wire [25:0] sigCSA_sum_2;
-wire [25:0] sigCSA_cry_2;  // csa : 3
+wire [25:0] sigCSA_cry_2;  
+
 wire [25:0] sigCSA_sum_3;
-wire [25:0] sigCSA_cry_3;  // csa : 4
+wire [25:0] sigCSA_cry_3;  
+
 wire [25:0] sigCSA_sum_4;
-wire [25:0] sigCSA_cry_4;  // csa : 5
+wire [25:0] sigCSA_cry_4;  
+
 wire [25:0] sigCSA_sum_5;
-wire [25:0] sigCSA_cry_5;  // csa : 6
+wire [25:0] sigCSA_cry_5; 
+
 wire [25:0] sigCSA_sum_6;
-wire [25:0] sigCSA_cry_6;  // csa : 7
+wire [25:0] sigCSA_cry_6; 
+
 wire [25:0] sigCSA_sum_7;
-wire [25:0] sigCSA_cry_7;  // layer : 2
-// csa : 8
+wire [25:0] sigCSA_cry_7; 
+
 wire [28:0] sigCSA_sum_8;
-wire [28:0] sigCSA_cry_8;  // csa : 9
+wire [28:0] sigCSA_cry_8; 
+
 wire [28:0] sigCSA_sum_9;
-wire [28:0] sigCSA_cry_9;  // csa : 10
+wire [28:0] sigCSA_cry_9;  
+
 wire [28:0] sigCSA_sum_10;
-wire [28:0] sigCSA_cry_10;  // csa : 11
+wire [28:0] sigCSA_cry_10; 
+
 wire [28:0] sigCSA_sum_11;
-wire [28:0] sigCSA_cry_11;  // csa : 12
+wire [28:0] sigCSA_cry_11; 
+
 wire [28:0] sigCSA_sum_12;
-wire [28:0] sigCSA_cry_12;  // layer : 3
-// csa : 13
+wire [28:0] sigCSA_cry_12; 
+
 wire [32:0] sigCSA_sum_13;
-wire [32:0] sigCSA_cry_13;  // csa : 14
+wire [32:0] sigCSA_cry_13;  
+
 wire [33:0] sigCSA_sum_14;
-wire [33:0] sigCSA_cry_14;  // csa : 15
+wire [33:0] sigCSA_cry_14;  
+
 wire [33:0] sigCSA_sum_15;
-wire [33:0] sigCSA_cry_15;  // layer : 4
-// csa : 16
+wire [33:0] sigCSA_cry_15;  
+
 wire [38:0] sigCSA_sum_16;
-wire [38:0] sigCSA_cry_16;  // csa : 17
+wire [38:0] sigCSA_cry_16;
+
 wire [41:0] sigCSA_sum_17;
-wire [41:0] sigCSA_cry_17;  // layer : 5
-// csa : 18
+wire [41:0] sigCSA_cry_17; 
+
 wire [47:0] sigCSA_sum_18;
-wire [47:0] sigCSA_cry_18;  // csa : 19
+wire [47:0] sigCSA_cry_18;
+
 wire [47:0] sigCSA_sum_19;
-wire [47:0] sigCSA_cry_19;  // layer : 6
-// csa : 20
+wire [47:0] sigCSA_cry_19; 
+
 wire [54:0] sigCSA_sum_20;
-wire [54:0] sigCSA_cry_20;  // layer : 7
-// csa : 21
+wire [54:0] sigCSA_cry_20; 
+
 wire [55:0] sigCSA_sum_21;
-wire [55:0] sigCSA_cry_21;  //sigCSA_sum_21
-//sigCSA_cry_21
-// all csa structures generated
-// carry signal for the final RCA
+wire [55:0] sigCSA_cry_21; 
+
+
 wire [54:0] carry_rca;
 
   assign pp0[0] = op1[0] & op2[0];

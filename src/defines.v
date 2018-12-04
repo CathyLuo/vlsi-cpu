@@ -23,11 +23,22 @@
 `define U_opcode 1:0
 `define UJ_opcode 1:0
 
+`define EXE_ADD 000000
+`define EXE_ADDI 0000
+`define EXE_SUB 000001
+
 `define EXE_MUL 000010
 `define EXE_DIV 000011
 `define EXE_DIVU 000100
 `define EXE_REM 000101
 `define EXE_REMU 000110
+
+`define EXE_AND 001000
+`define EXE_ANDI 0001
+`define EXE_OR 001001
+`define EXE_ORI 0010
+`define EXE_XOR 001010
+`define EXE_XORI 0011
 
 `define EXE_SLL 010000
 `define EXE_SLLI 0100
@@ -35,6 +46,7 @@
 `define EXE_SRAI 0101
 `define EXE_SRL 010010
 `define EXE_SRLI 0110
+
 
 //candy: register file
 `define RegAddrBus 3:0
