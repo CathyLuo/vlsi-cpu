@@ -1,4 +1,4 @@
-`include "defines.v"
+`include "candy_defines.v"
 
 module candy (input wire clk,
 			input wire rst

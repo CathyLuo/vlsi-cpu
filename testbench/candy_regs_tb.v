@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 
 `include "candy_regs.v"
-`include "defines.v"
+`include "candy_defines.v"
 
 
 module candy_regs_tb;

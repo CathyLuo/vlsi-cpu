@@ -8,8 +8,8 @@ module walltree_mul_tb;
 
     initial begin
         #0 begin
-            op1 <= 24'h96;
-            op2 <= 24'ha7;    
+            op1 <= 24'd113;
+            op2 <= 24'd32345;    
         end  
     end
 endmodule // walltree_mul_tb

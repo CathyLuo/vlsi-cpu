@@ -23,30 +23,33 @@
 `define U_opcode 1:0
 `define UJ_opcode 1:0
 
-`define EXE_ADD 000000
-`define EXE_ADDI 0000
-`define EXE_SUB 000001
+`define EXE_ADD 6'b000000
+`define EXE_ADDI 4'b0000
+`define EXE_SUB 6'b000001
 
-`define EXE_MUL 000010
-`define EXE_DIV 000011
-`define EXE_DIVU 000100
-`define EXE_REM 000101
-`define EXE_REMU 000110
+`define EXE_MUL 6'b000010
+`define EXE_DIV 6'b000011
+`define EXE_DIVU 6'b000100
+`define EXE_REM 6'b000101
+`define EXE_REMU 6'b000110
 
-`define EXE_AND 001000
-`define EXE_ANDI 0001
-`define EXE_OR 001001
-`define EXE_ORI 0010
-`define EXE_XOR 001010
-`define EXE_XORI 0011
+`define EXE_AND 6'b001000
+`define EXE_ANDI 4'b0001
+`define EXE_OR 6'b001001
+`define EXE_ORI 4'b0010
+`define EXE_XOR 6'b001010
+`define EXE_XORI 4'b0011
 
-`define EXE_SLL 010000
-`define EXE_SLLI 0100
-`define EXE_SRA 010001
-`define EXE_SRAI 0101
-`define EXE_SRL 010010
-`define EXE_SRLI 0110
+`define EXE_SLL 6'b010000
+`define EXE_SLLI 4'b0100
+`define EXE_SRA 6'b010001
+`define EXE_SRAI 4'b0101
+`define EXE_SRL 6'b010010
+`define EXE_SRLI 4'b0110
 
+//NEG
+`define EXE_NEG 6'b100000
+`define EXE_NOT 6'b110000
 
 //candy: register file
 `define RegAddrBus 3:0
