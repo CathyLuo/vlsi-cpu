@@ -106,6 +106,31 @@ assign mul_op1 = reg1_i;
 assign mul_op2 = reg2_i;
 
 reg [23:0] wdata_o;
+reg signed_div_i;
+        
+
+reg[23:0] opdata1_i;
+reg[23:0] opdata2_i;
+reg start_i;
+reg annul_i;
+
+    //wire[47:0] result_o;
+wire [23:0]		quotient_o;
+wire [23:0]		remainder_o;
+wire ready_o;
+
+   
+
+div div0(.clk(clk),
+        .rst(rst),
+        .signed_div_i(signed_div_i),
+        .opdata1_i(opdata1_i),
+        .opdata2_i(opdata2_i),
+        .start_i(start_i),
+        .annul_i(annul_i),
+        .remainder_o(remainder_o),
+        .quotient_o(quotient_o),
+        .ready_o(ready_o));
 
 walltree_mul wm(
     .op1(mul_op1),
