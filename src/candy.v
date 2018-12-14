@@ -1,8 +1,12 @@
 `include "candy_defines.v"
 
 module candy (input wire clk,
-			input wire rst
+			input wire rst,
 
+	input wire [`SRAMDataWidth] sram_rdata,
+	output reg [`SRAMAddrWidth] sram_raddr,
+	output reg [`SRAMAddrWidth] sram_waddr,
+	output reg [`SRAMDataWidth] sram_wdata
 );
 
 wire reg1_read_enable;
@@ -23,10 +27,10 @@ wire [`RegBus] reg2_i;
 wire [`RegBus] res_o;
 
 // sram
-wire [`SRAMAddrWidth] sram_raddr;
-wire [`SRAMAddrWidth] sram_waddr;
-reg [`SRAMDataWidth] sram_rdata;
-reg [`SRAMDataWidth] sram_wdata;
+//wire [`SRAMAddrWidth] sram_raddr;
+//wire [`SRAMAddrWidth] sram_waddr;
+//reg [`SRAMDataWidth] sram_rdata;
+//reg [`SRAMDataWidth] sram_wdata;
 wire sram_write_enable;
 wire sram_read_enable;
 reg sram_read_ready;
