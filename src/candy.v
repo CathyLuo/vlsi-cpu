@@ -103,7 +103,7 @@ candy_if if0(
 	.pc(pc),
 	.if_enable(if_enable),
 	.data_ready(rdata_ready),
-	.sram_data(rdata),
+	.sram_data(sram_rdata),
 	.inst(inst),
 	.sram_addr(sram_raddr),
 	.sram_read_enable(read_enable),
