@@ -1,7 +1,7 @@
 `include "candy_defines.v"
 
 module candy_alu(
-    input clk,
+    input wire clk,
     input wire rst,
 
     input wire [`AluOpBus] aluop_i,

@@ -82,3 +82,33 @@
 `define DivResultNotReady 	1'b0
 `define DivStart 			1'b1
 `define DivStop 			1'b0
+
+//SRAM controller
+`define SRAMDataWidth   23:0
+`define SRAMAddrWidth   16:0 
+`define LoadEnable 1'b1
+`define ReadReady 1'b1
+`define ReadNotReady 1'b0
+
+
+`define ChipDisable 1'b0
+`define ChipEnable 1'b1
+
+//inst format
+`define type 1:0
+`define ROP 5:0
+`define IOP 3:0
+`define SOP 3:0
+`define UOP 1:0
+`define ImmWidth 15:0
+
+`define R 00
+`define I 01
+`define S 10
+`define U 11
+
+//execution
+`define IF 00
+`define ID 01
+`define EX 10
+`define WB 11

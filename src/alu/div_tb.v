@@ -35,8 +35,8 @@ module div_tb;
             clk <= 1'b0;
             rst <= 1'b1;
             signed_div_i <= 1'b0;
-            opdata1_i <= 24'd703;
-            opdata2_i <= 24'd37;
+            opdata1_i <= 24'd704;
+            opdata2_i <= 24'd36;
             start_i <= 1'b1;
             annul_i <= 1'b0;
         end

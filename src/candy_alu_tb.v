@@ -61,17 +61,17 @@ initial begin
     #10 begin
         aluop_i <= `EXE_SLL;
         reg1_i <= 24'h9bcdef;
-        reg2_i <= 24'h123456;
+        reg2_i <= 24'h2;
     end
     #10 begin
         aluop_i <= `EXE_SRA;
         reg1_i <= 24'h9bcdef;
-        reg2_i <= 24'h123456;
+        reg2_i <= 24'h2;
     end
     #10 begin
         aluop_i <= `EXE_SRL;
         reg1_i <= 24'h9bcdef;
-        reg2_i <= 24'h123456;
+        reg2_i <= 24'h2;
     end
     #10 begin
         aluop_i <= `EXE_NEG;

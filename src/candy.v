@@ -14,8 +14,8 @@ wire [`RegAddrBus] reg1_addr;
 wire [`RegAddrBus] reg2_addr;
 
 wire write_enable;
-wire [`RegAddrBus]waddr;
-wire [`RegBus]wdata;
+wire [`RegAddrBus]reg_waddr;
+wire [`RegBus]reg_wdata;
 
 //alu
 wire [`AluOpBus] aluop_i;
@@ -23,24 +23,41 @@ wire [`RegBus] reg1_i;
 wire [`RegBus] reg2_i;
 wire [`RegBus] res_o;
 
-//div
-reg signed_div_i;
-reg[23:0] opdata1_i;
-reg[23:0] opdata2_i;
-reg start_i;
-reg annul_i;
+// sram
+wire [`SRAMAddrWidth] sram_raddr;
+wire [`SRAMAddrWidth] sram_waddr;
+reg [`SRAMDataWidth] sram_rdata;
+reg [`SRAMDataWidth] sram_wdata;
+wire sram_write_enable;
+wire sram_read_enable;
+reg sram_read_ready;
 
-wire [23:0]	quotient_o;
-wire [23:0]	remainder_o;
-wire ready_o;
+//pc
+reg [`SRAMAddrWidth] pc;
+reg pc_enable;
 
+//if
+reg [`SRAMDataWidth] inst;
+reg if_enable;
+
+//id
+reg [`Rop] op;
+reg [`ImmWdith] imm_data;
+reg id_enable;
+
+//load
+reg load_enable;
+
+//wb
+reg wb_enable;
+reg [`SRAMAddrWidth] wb_addr; 
 
 candy_regs regfile(
 	.clk(clk),
 	.rst(rst),
 	.we(write_enable),
-	.waddr(waddr),
-	.wdata(wdata),
+	.waddr(reg_waddr),
+	.wdata(reg_wdata),
 	.re1(reg1_read_enable),
 	.raddr1(reg1_addr),
 	.rdata1(reg1_data),
@@ -57,18 +74,69 @@ candy_alu alu(
 	.reg2_i(reg2_i),
 	.res_o(res_o)
 );
-   
-div div0(
+
+candy_sram sram(
 	.clk(clk),
-    .rst(rst),
-    .signed_div_i(signed_div_i),
-    .opdata1_i(opdata1_i),
-    .opdata2_i(opdata2_i),
-    .start_i(start_i),
-    .annul_i(annul_i),
-    .remainder_o(remainder_o),
-    .quotient_o(quotient_o),
-    .ready_o(ready_o));
+	.rst(rst),
+	.write_enable(write_enable),
+	.waddr(waddr),
+	.wdata(wdata),
+	.read_enable(read_enable),
+	.raddr(raddr),
+	.rdata(rdata),
+	.rdata_ready(rdata_ready)
+);
+
+candy_pc pc(
+	.clk(clk),
+	.rst(rst),
+	.pc_enable(pc_enable),
+	.pc(pc)
+);
+
+candy_if if0(
+	.clk(clk),
+	.rst(rst),
+	.pc(pc),
+	.if_enable(if_enable),
+	.data_ready(rdata_ready),
+	.sram_data(rdata),
+	.inst(inst),
+	.sram_addr(raddr),
+	.sram_read_enable(read_enable)
+);
+
+candy_id id(
+	.clk(clk),
+	.rst(rst),
+	.inst(inst),
+	.op(op),
+	.rs1(reg1_addr),
+	.rs2(reg2_addr),
+	.rd(reg_waddr),
+	.imm_data(imm_data)
+);
+
+candy_load load(
+	.clk(clk),
+	.rst(rs1),
+	.load_enable(load_enable),
+	.rd(imm_data),
+	.reg_waddr(reg_waddr),
+	.reg_wdata(reg_wdata)
+);
+
+candy_wb wb(
+	.clk(clk),
+	.rst(rst),
+	.wb_enable(wb_enable),
+	.result(res_o),
+	.result(wb_addr),
+	.write_enable(sram_write_enable),
+	.wdata(sram_wdata),
+	.waddr(sram_waddr)
+);
+
 
 endmodule
 
