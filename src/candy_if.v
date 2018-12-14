@@ -12,10 +12,12 @@ module candy_if(
 
     output reg [`SRAMDataWidth] inst,
     output reg [`SRAMAddrWidth] sram_addr,
-    output reg sram_read_enable
+    output reg sram_read_enable,
+    output reg is_mem
 );
 
 always @ (posedge clk) begin
+    is_mem <= 1'b1;
     if(rst == `RstEnable) begin
         sram_addr <= 17'b0;
         inst <= 24'b0;
