@@ -142,6 +142,7 @@ candy_wb wb(
 	.result(res_o),
 	.reg_write_enable(write_enable),
 	.reg_addr(rd),
+	.sram_write_enable(sram_write_enable),
 	.sram_result_addr(sram_waddr),
 	.sram_waddr(sram_waddr),
 	.sram_wdata(sram_wdata),
