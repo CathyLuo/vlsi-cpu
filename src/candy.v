@@ -38,6 +38,7 @@ reg pc_enable;
 //if
 reg [`SRAMDataWidth] inst;
 reg if_enable;
+reg is_mem;
 
 //id
 reg [`ROP] op;
@@ -104,7 +105,8 @@ candy_if if0(
 	.sram_data(rdata),
 	.inst(inst),
 	.sram_addr(raddr),
-	.sram_read_enable(read_enable)
+	.sram_read_enable(read_enable),
+	.is_mem(is_mem)
 );
 
 candy_id id(
@@ -116,7 +118,9 @@ candy_id id(
 	.rs1(reg1_addr),
 	.rs2(reg2_addr),
 	.rd(reg_waddr),
-	.imm_data(imm_data)
+	.imm_data(imm_data),
+	.re1(reg1_read_enable),
+    .re2(reg2_read_enable)
 );
 
 candy_load load(
@@ -124,6 +128,7 @@ candy_load load(
 	.rst(rst),
 	.load_enable(load_enable),
 	.rd(reg1_addr),
+	.imm(imm_data),
 	.reg_waddr(reg_waddr),
 	.reg_wdata(reg_wdata)
 );
@@ -132,10 +137,11 @@ candy_wb wb(
 	.clk(clk),
 	.rst(rst),
 	.wb_enable(wb_enable),
+	.is_mem(is_mem),
 	.result(res_o),
+	.reg_write_enable(write_enable),
 	.sram_result_addr(sram_waddr),
 	.sram_wdata(sram_wdata),
-	.reg_write_enable(write_enable),
 	.reg_waddr(reg_waddr),
 	.reg_wdata(reg_wdata)
 );
