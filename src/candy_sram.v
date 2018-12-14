@@ -29,7 +29,7 @@ always @ (posedge clk) begin
 end
 
 always @ (posedge clk) begin
-	if(write_enable && read_enable) begin
+	if(write_enable && !read_enable) begin
 		SRAM[waddr] <= wdata;
 	end
 end
