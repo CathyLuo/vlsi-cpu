@@ -14,6 +14,6 @@ module candy_load(
 
 always @ (posedge clk) begin
     reg_waddr <= rd;
-    reg_wdata <= imm;
+    reg_wdata <= {8'b0 + imm};
 end
 endmodule // candy_load

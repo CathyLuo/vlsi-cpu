@@ -4,19 +4,33 @@ module candy_wb(
     input wire clk,
     input wire rst,
 
+    input wire is_mem,
+
     input wire wb_enable, 
     input wire [`SRAMDataWidth] result,
-    input wire [`SRAMAddrWidth] result_addr,
+    input wire [`SRAMAddrWidth] sram_result_addr,
+    input wire [`RegAddrBus] reg_addr,
 
-    output wire write_enable,
-    output reg [`SRAMDataWidth] wdata,
-    output reg [`SRAMDataWidth] waddr
+    output wire sram_write_enable,
+    output reg [`SRAMDataWidth] sram_wdata,
+    output reg [`SRAMDataWidth] sram_waddr,
+
+    output reg reg_write_enable,
+    output reg [`RegAddrBus] reg_waddr,
+    output reg [`RegBus] reg_wdata
 );
 
 always @ (posedge clk) begin
     if(wb_enable == `WriteEnable) begin
-        wdata <= result;
-        waddr <= result_addr;
+        if(is_mem) begin
+            sram_wdata <= result;
+            sram_waddr <= sram_result_addr;
+        end
+        else begin
+            reg_waddr <= reg_addr;
+            reg_wdata <= result;
+            reg_write_enable <= `WriteEnable;
+        end
     end
 end
 
