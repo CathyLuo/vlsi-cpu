@@ -85,8 +85,8 @@ candy_sram sram(
 	.waddr(sram_waddr),
 	.wdata(sram_wdata),
 	.read_enable(read_enable),
-	.raddr(raddr),
-	.rdata(rdata),
+	.raddr(sram_raddr),
+	.rdata(sram_rdata),
 	.rdata_ready(rdata_ready)
 );
 
@@ -105,7 +105,7 @@ candy_if if0(
 	.data_ready(rdata_ready),
 	.sram_data(rdata),
 	.inst(inst),
-	.sram_addr(raddr),
+	.sram_addr(sram_raddr),
 	.sram_read_enable(read_enable),
 	.is_mem(is_mem)
 );
