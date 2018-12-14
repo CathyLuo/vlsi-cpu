@@ -44,6 +44,7 @@ reg is_mem;
 reg [`ROP] op;
 reg [`ImmWidth] imm_data;
 reg id_enable;
+reg [`RegAddrBus] rd;
 
 //load
 reg load_enable;
@@ -117,7 +118,7 @@ candy_id id(
 	.id_enable(id_enable),
 	.rs1(reg1_addr),
 	.rs2(reg2_addr),
-	.rd(reg_waddr),
+	.rd(rd),
 	.imm_data(imm_data),
 	.re1(reg1_read_enable),
     .re2(reg2_read_enable)
@@ -127,7 +128,7 @@ candy_load load(
 	.clk(clk),
 	.rst(rst),
 	.load_enable(load_enable),
-	.rd(reg1_addr),
+	.rd(rd),
 	.imm(imm_data),
 	.reg_waddr(reg_waddr),
 	.reg_wdata(reg_wdata)
@@ -140,7 +141,9 @@ candy_wb wb(
 	.is_mem(is_mem),
 	.result(res_o),
 	.reg_write_enable(write_enable),
+	.reg_addr(rd),
 	.sram_result_addr(sram_waddr),
+	.sram_waddr(sram_waddr),
 	.sram_wdata(sram_wdata),
 	.reg_waddr(reg_waddr),
 	.reg_wdata(reg_wdata)
