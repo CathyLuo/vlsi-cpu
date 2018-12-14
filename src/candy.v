@@ -81,8 +81,8 @@ candy_alu alu(
 candy_sram sram(
 	.clk(clk),
 	.rst(rst),
-	.write_enable(write_enable),
-	.waddr(waddr),
+	.write_enable(sram_write_enable),
+	.waddr(sram_waddr),
 	.wdata(sram_wdata),
 	.read_enable(read_enable),
 	.raddr(raddr),
