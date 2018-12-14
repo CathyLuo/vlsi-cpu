@@ -10,8 +10,8 @@ module candy_sram(
 
 	input wire read_enable,
 	input wire [`SRAMAddrWidth] raddr,
-	output wire [`SRAMDataWidth] rdata,
-    output wire rdata_ready
+	output reg [`SRAMDataWidth] rdata,
+    output reg rdata_ready
 );
 
 reg [`SRAMDataWidth] SRAM [`SRAMAddrWidth];

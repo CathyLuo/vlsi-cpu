@@ -1,11 +1,11 @@
-`include "defines.v"
+`include "candy_defines.v"
 
 module candy_pc(
     input wire clk,
     input wire rst,
 
     input wire pc_enable,
-    output reg [`SRAMAddrWidth] pc,
+    output reg [`SRAMAddrWidth] pc
 );
 
 always @(posedge clk) begin

@@ -1,3 +1,5 @@
+`include "candy_defines.v"
+
 module candy_wb(
     input wire clk,
     input wire rst,
@@ -7,12 +9,12 @@ module candy_wb(
     input wire [`SRAMAddrWidth] result_addr,
 
     output wire write_enable,
-    output wire [`SRAMDataWidth] wdata,
-    output wire [`SRAMDataWidth] waddr,
+    output reg [`SRAMDataWidth] wdata,
+    output reg [`SRAMDataWidth] waddr
 );
 
 always @ (posedge clk) begin
-    if(wb_enable == `write_enable) begin
+    if(wb_enable == `WriteEnable) begin
         wdata <= result;
         waddr <= result_addr;
     end

@@ -41,8 +41,8 @@ reg [`SRAMDataWidth] inst;
 reg if_enable;
 
 //id
-reg [`Rop] op;
-reg [`ImmWdith] imm_data;
+reg [`ROP] op;
+reg [`ImmWidth] imm_data;
 reg id_enable;
 
 //load
@@ -87,7 +87,7 @@ candy_sram sram(
 	.rdata_ready(rdata_ready)
 );
 
-candy_pc pc(
+candy_pc pc0(
 	.clk(clk),
 	.rst(rst),
 	.pc_enable(pc_enable),
@@ -131,7 +131,6 @@ candy_wb wb(
 	.rst(rst),
 	.wb_enable(wb_enable),
 	.result(res_o),
-	.result(wb_addr),
 	.write_enable(sram_write_enable),
 	.wdata(sram_wdata),
 	.waddr(sram_waddr)

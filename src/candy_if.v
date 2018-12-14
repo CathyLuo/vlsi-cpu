@@ -3,7 +3,7 @@
 module candy_if(
     input wire clk,
     input wire rst,
-    input wire [`SRAMAddWidth] pc,
+    input wire [`SRAMAddrWidth] pc,
     
     input wire if_enable,
 
@@ -11,8 +11,8 @@ module candy_if(
     input wire [`SRAMDataWidth] sram_data,
 
     output reg [`SRAMDataWidth] inst,
-    output reg [`SRAMAddWidth] sram_addr,
-    output reg sram_read_enable;
+    output reg [`SRAMAddrWidth] sram_addr,
+    output reg sram_read_enable
 );
 
 always @ (posedge clk) begin
@@ -29,7 +29,7 @@ always @ (posedge clk) begin
                 inst <= sram_data;
             end
         end
-        else
+        else begin
             sram_read_enable <= `ReadDisable;
         end
     end
