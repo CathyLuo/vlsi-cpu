@@ -70,8 +70,8 @@ candy_alu alu(
 	.clk(clk),
 	.rst(rst),
 	.aluop_i(aluop_i),
-	.reg1_i(reg1_i),
-	.reg2_i(reg2_i),
+	.reg1_i(reg1_data),
+	.reg2_i(reg2_data),
 	.res_o(res_o)
 );
 
@@ -80,7 +80,7 @@ candy_sram sram(
 	.rst(rst),
 	.write_enable(write_enable),
 	.waddr(waddr),
-	.wdata(wdata),
+	.wdata(sram_wdata),
 	.read_enable(read_enable),
 	.raddr(raddr),
 	.rdata(rdata),
