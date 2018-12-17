@@ -6,12 +6,12 @@ module candy_wb(
 
     input wire is_mem,
 
-    input wire wb_enable, 
+    input wire wb_enable,
     input wire [`SRAMDataWidth] result,
     input wire [`SRAMAddrWidth] sram_result_addr,
     input wire [`RegAddrBus] reg_addr,
 
-    output wire sram_write_enable,
+    output reg sram_write_enable,
     output reg [`SRAMDataWidth] sram_wdata,
     output reg [`SRAMAddrWidth] sram_waddr,
 

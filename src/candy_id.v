@@ -15,8 +15,8 @@ module candy_id(
     output reg re1,
     output reg re2
 );
-
-wire [`type] typecode = inst[23:22];
+wire [`type] typecode;
+assign  typecode = inst[23:22];
 
 always @ (posedge clk) begin
     if(rst == `RstEnable) begin
