@@ -5,18 +5,18 @@ module candy_tb;
 reg clk;
 reg rst;
 
-reg [`SRAMDataWidth] sram_rdata;
-wire [`SRAMAddrWidth] sram_raddr;
-wire [`SRAMAddrWidth] sram_waddr;
-wire [`SRAMDataWidth] sram_wdata;
+wire [`SRAMDataWidth] sram_data_io;
+wire chip_enable_o;
+wire write_enable_o;
+wire read_enable_o;
 
 candy candy0(
     .clk(clk),
     .rst(rst),
-    .sram_raddr(sram_raddr),
-    .sram_rdata(sram_rdata),
-    .sram_waddr(sram_waddr),
-    .sram_wdata(sram_wdata)
+    .sram_data_io(sram_data_io),
+    .chip_enable_o(chip_enable_o),
+    .write_enable_o(write_enable_o),
+    .read_enable_o(read_enable_o)
 );
 
 initial begin

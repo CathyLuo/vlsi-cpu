@@ -3,11 +3,12 @@
 module candy (input wire clk,
 			input wire rst,
 
-	input wire [`SRAMDataWidth] sram_rdata,
-	output reg [`SRAMAddrWidth] sram_raddr,
-	output reg [`SRAMAddrWidth] sram_waddr,
-	output reg [`SRAMDataWidth] sram_wdata
+	inout [`SRAMDataWidth] sram_data_io,
+	output chip_enable_o,
+	output write_enable_o,
+    output read_enable_o
 );
+
 
 wire reg1_read_enable;
 wire reg2_read_enable;
@@ -27,28 +28,27 @@ wire [`RegBus] reg2_i;
 wire [`RegBus] res_o;
 
 // sram
-//wire [`SRAMAddrWidth] sram_raddr;
-//wire [`SRAMAddrWidth] sram_waddr;
-//reg [`SRAMDataWidth] sram_rdata;
-//reg [`SRAMDataWidth] sram_wdata;
 wire sram_write_enable;
 wire sram_read_enable;
-reg sram_read_ready;
+wire [`SRAMAddrWidth] sram_waddr_i;
+wire [`SRAMDataWidth] sram_wdata_i;
+wire [`SRAMAddrWidth] sram_raddr_i;
+wire [`SRAMDataWidth] sram_rdata_i;
 
 //pc
-reg [`SRAMAddrWidth] pc;
+wire [`SRAMAddrWidth] pc;
 reg pc_enable;
 
 //if
-reg [`SRAMDataWidth] inst;
+wire [`SRAMDataWidth] inst;
 reg if_enable;
-reg is_mem;
+wire is_mem;
 
 //id
-reg [`ROP] op;
-reg [`ImmWidth] imm_data;
+wire [`ROP] op;
+wire [`ImmWidth] imm_data;
 reg id_enable;
-reg [`RegAddrBus] rd;
+wire [`RegAddrBus] rd;
 
 //load
 reg load_enable;
@@ -85,13 +85,16 @@ candy_alu alu(
 candy_sram sram(
 	.clk(clk),
 	.rst(rst),
-	.write_enable(sram_write_enable),
-	.waddr(sram_waddr),
-	.wdata(sram_wdata),
-	.read_enable(read_enable),
-	.raddr(sram_raddr),
-	.rdata(sram_rdata),
-	.rdata_ready(rdata_ready)
+	.write_enable_i(sram_write_enable),
+	.sram_waddr_i(sram_waddr_i),
+	.sram_wdata_i(sram_wdata_i),
+	.read_enable_i(sram_read_enable),
+	.sram_raddr_i(sram_raddr_i),
+	.sram_rdata_i(sram_rdata_i),
+	.write_enable_o(write_enable_o),
+	.read_enable_o(read_enable_o),
+	.sram_data_io(sram_data_io),
+	.chip_enable_o(chip_enable_o)
 );
 
 candy_pc pc0(
@@ -107,9 +110,9 @@ candy_if if0(
 	.pc(pc),
 	.if_enable(if_enable),
 	.data_ready(rdata_ready),
-	.sram_data(sram_rdata),
+	.sram_data(sram_rdata_i),
 	.inst(inst),
-	.sram_addr(sram_raddr),
+	.sram_addr(sram_raddr_i),
 	.sram_read_enable(read_enable),
 	.is_mem(is_mem)
 );
@@ -147,9 +150,9 @@ candy_wb wb(
 	.reg_write_enable(write_enable),
 	.reg_addr(rd),
 	.sram_write_enable(sram_write_enable),
-	.sram_result_addr(sram_waddr),
-	.sram_waddr(sram_waddr),
-	.sram_wdata(sram_wdata),
+	.sram_result_addr(sram_waddr_i),
+	.sram_waddr(sram_waddr_i),
+	.sram_wdata(sram_wdata_i),
 	.reg_waddr(reg_waddr),
 	.reg_wdata(reg_wdata)
 );
@@ -157,11 +160,13 @@ candy_wb wb(
 always @ (posedge clk) begin
 	if (rst == `RstEnable) begin
 		state <= 2'b0;
+		pc_enable <= 1'b1;
 	end
 	else begin
-		pc_enable <= 1'b1;
 		case (state)
 			2'b00:  begin
+				wb_enable <= 1'b0;
+				pc_enable <= 1'b0;
 				if_enable <= 1'b1;
 				state <= 2'b01;
 			end
@@ -179,6 +184,7 @@ always @ (posedge clk) begin
 				wb_enable <= 1'b1;
 				load_enable <= 1'b0;
 				state <= 2'b00;
+				pc_enable <= 1'b1;
 			end
 		endcase
 	end

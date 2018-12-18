@@ -41,7 +41,6 @@ always @ (*) begin
         wdata_o <= `ZeroWord;
     end
     else begin
-        $display("1 %b", aluop_i);
         case (aluop_i)
             `EXE_NOT:   begin
                 wdata_o <= ~(reg1_i);
@@ -50,7 +49,6 @@ always @ (*) begin
                 wdata_o <= ~(reg1_i) + 1;
             end
             `EXE_AND:   begin
-                $display("1 code %b", `EXE_AND);
                 wdata_o <= (reg1_i & reg2_i);
             end
             `EXE_OR:    begin
@@ -68,7 +66,6 @@ always @ (*) begin
         wdata_o <= `ZeroWord;
     end
     else begin
-        $display("2 %b", aluop_i);
         case (aluop_i) 
             `EXE_SLL:   begin
                 wdata_o <= reg1_i << reg2_i;
@@ -89,8 +86,6 @@ always @ (*) begin
         wdata_o <= `ZeroWord;
     end
     else begin
-        $display("3 %b", aluop_i);
-        
         case (aluop_i)        
             `EXE_ADD: begin
                 add_op1 <= reg1_i;
