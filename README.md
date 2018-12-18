@@ -43,8 +43,15 @@
 | sb    | Store byte                         | S    | 10       | 1000   |
 | sw    | Store word                         | S    | 10       | 1001   |
 
-# 2. Instruction Set Coding
-
+# 2. Instruction Set Format
+| Inst type        | typecode | Opcode | rs1 | RS2 | rd | imm       |
+|------------------|----------|--------|-----|-----|----|-----------|
+| R(Register)      | Typecode | Opcode | RS1 | RS2 | RD |           |
+| I(immediate+Reg) | Typecode | Opcode | RS1 |     | RD | imm       |
+| S(Reg+Addr)      | Typecode | Opcode | RS1 | RS2 |    | imm(addr) |
+| SB(Branch)       | Typecode | Opcode | RS1 | RS2 |    | imm       |
+| U(big imm)       | Typecode | Opcode |     |     | RD | imm(big)  |
+| UJ(Jump addr)    | Typecode | Opcode |     |     | RD | imm(addr) |
 # 3. Register File
 # 4. Communication BUS
 
