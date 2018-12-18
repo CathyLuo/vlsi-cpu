@@ -3,7 +3,7 @@
 # 1. Instruction Set
   Customized RISC-V ISA
 
-| Inst  | Function                           | type | TypeCode | Opcode |
+| Inst  | Function                           | Type | TypeCode | Opcode |
 |-------|------------------------------------|------|----------|--------|
 | add   | Add                                | R    | 00       | 000000 |
 | addi  | Add immediate                      | I    | 01       | 0000   |
@@ -44,7 +44,7 @@
 | sw    | Store word                         | S    | 10       | 1001   |
 
 # 2. Instruction Set Format
-| Inst type        | typecode | Opcode | rs1 | RS2 | rd | imm       |
+| Inst type        | Typecode | Opcode | RS1 | RS2 | RD | Imm       |
 |------------------|----------|--------|-----|-----|----|-----------|
 | R(Register)      | Typecode | Opcode | RS1 | RS2 | RD |           |
 | I(immediate+Reg) | Typecode | Opcode | RS1 |     | RD | imm       |
